@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Profile | Tanaman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo-container">
+                <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
+            </div>
+            <span class="company-name">Tanaman</span>
+        </div>
+
+        <div class="nav-profile" id="profile-trigger">
+            <div class="profile-text">
+                <span class="profile-name">Marc Lester</span>
+                <span class="profile-role">Admin</span>
+            </div>
+            <img src="Image/images.jpg" alt="Profile" class="profile-pic">
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+            <div class="dropdown-menu" id="profile-dropdown">
+                <div class="dropdown-header">
+                    <div class="user-name">Marc Lester</div>
+                    <div class="user-email">marclester@gmail.com</div>
+                </div>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
+                <hr class="dropdown-divider">
+                <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                <li><a href="client.html" class="active"><i class="fas fa-user-friends"></i> <span>Clients</span></a></li>
+                <li><a href="project.html"><i class="fas fa-briefcase"></i> <span>Projects</span></a></li>
+                <li><a href="employee.html"><i class="fas fa-user-check"></i> <span>Employees</span></a></li>
+                <li><a href="quote.html"><i class="fas fa-file-invoice"></i> <span>Quotes</span></a></li>
+                <li><a href="invoice.html"><i class="fas fa-file-invoice-dollar"></i> <span>Invoices</span></a></li>
+                <li><a href="inventory.html"><i class="fas fa-box"></i> <span>Inventory</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="page-header">
+                <div>
+                    <a href="client.html" style="text-decoration:none; color: #64748b; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; margin-bottom: 10px;">
+                        <i class="fas fa-arrow-left"></i> Back to Clients
+                    </a>
+                    <h2 id="displayName">John Doe</h2>
+                    <p>Client ID: #CLI-001</p>
+                </div>
+                <div>
+                    <button class="btn-primary" id="openEditBtn">
+                        <i class="fas fa-pen"></i> Edit Profile
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="grid-template-columns: 1fr 2fr;">
+                
+                <div class="stat-card" style="display: block;">
+                    <h3 class="panel-section-title">Contact Info</h3>
+                    
+                    <div class="info-group">
+                        <label class="info-label">Email</label>
+                        <div class="info-value" id="displayEmail">john.doe@example.com</div>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label class="info-label">Phone</label>
+                        <div class="info-value" id="displayPhone">+63 912 345 6789</div>
+                    </div>
+
+                    <div class="info-group">
+                        <label class="info-label">Address</label>
+                        <div class="info-value" id="displayAddress">123 Rizal St, Manila, Philippines</div>
+                    </div>
+                </div>
+
+                <div class="stat-card" style="display: block;">
+                    <h3 class="panel-section-title">Active Projects</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Status</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Office Renovation</td>
+                                <td><span class="status-badge done">DONE</span></td>
+                                <td>Jan 15, 2026</td>
+                            </tr>
+                            <tr>    
+                                <td>Website Redesign</td>
+                                <td><span class="status-badge active">ACTIVE</span></td>
+                                <td>Dec 20, 2025</td>
+                            </tr>
+                            <tr>
+                                <td>Office Renovation</td>
+                                <td><span class="status-badge inactive">INACTIVE</span></td>
+                                <td>Jan 15, 2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Edit Client Profile</h3>
+                <span class="close-modal-btn" id="closeEditBtn">&times;</span>
+            </div>
+            
+            <form class="modal-form" id="editProfileForm">
+                <div class="input-group">
+                    <label>Client Name</label>
+                    <input type="text" id="inputName" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="inputEmail" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="inputPhone">
+                </div>
+
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" id="inputAddress">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelEditBtn">Cancel</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const profileTrigger = document.getElementById('profile-trigger');
+        const dropdownMenu = document.getElementById('profile-dropdown');
+        const dropdownIcon = document.querySelector('.dropdown-icon');
+
+        if(profileTrigger) {
+            profileTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            window.addEventListener('click', function(e) {
+                if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+        // EDIT LOGIC 
+        const modal = document.getElementById('editProfileModal');
+        const openBtn = document.getElementById('openEditBtn');
+        const closeBtn = document.getElementById('closeEditBtn');
+        const cancelBtn = document.getElementById('cancelEditBtn');
+        const form = document.getElementById('editProfileForm');
+        const displayName = document.getElementById('displayName');
+        const displayEmail = document.getElementById('displayEmail');
+        const displayPhone = document.getElementById('displayPhone');
+        const displayAddress = document.getElementById('displayAddress');
+        const inputName = document.getElementById('inputName');
+        const inputEmail = document.getElementById('inputEmail');
+        const inputPhone = document.getElementById('inputPhone');
+        const inputAddress = document.getElementById('inputAddress');
+
+        if(openBtn) {
+            openBtn.addEventListener('click', () => {
+                inputName.value = displayName.innerText;
+                inputEmail.value = displayEmail.innerText;
+                inputPhone.value = displayPhone.innerText;
+                inputAddress.value = displayAddress.innerText;
+                modal.style.display = 'flex';
+            });
+        }
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        if(closeBtn) closeBtn.addEventListener('click', closeModal);
+        if(cancelBtn) cancelBtn.addEventListener('click', closeModal);
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        if(form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); 
+                
+                displayName.innerText = inputName.value;
+                displayEmail.innerText = inputEmail.value;
+                displayPhone.innerText = inputPhone.value;
+                displayAddress.innerText = inputAddress.value;
+                
+                closeModal();
+
+                Swal.fire({
+                    title: 'Profile Updated!',
+                    text: 'Client information has been saved.',
+                    icon: 'success',
+                    confirmButtonColor: '#319B72',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            });
+        }
+    </script>
+</body>
+</html>

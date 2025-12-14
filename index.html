@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Tanaman</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo-container">
+                <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
+            </div>
+            <span class="company-name">Tanaman</span>
+        </div>
+    </nav>
+
+    <div class="login-card">
+        
+        <div class="card-header">
+            <h2>Welcome Back</h2>
+            <p>Enter your credentials to access the dashboard</p>
+        </div>
+
+        <form class="card-body">
+            <div class="input-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" placeholder="Enter username or email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+
+            <div class="actions">
+                <label for="remember-me" class="remember-me">
+                    <input type="checkbox" id="remember-me">
+                    Remember me
+                </label>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="submit-btn">Sign In</button>
+        </form>
+
+        <div class="card-footer">
+            <p>Don't have an account? <a href="#">Contact Admin</a></p>
+        </div>
+
+    </div>
+
+    <script>
+        const loginForm = document.querySelector('.card-body');
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            if (usernameInput === 'admin' && passwordInput === 'admin') {
+                Swal.fire({
+                    title: 'Welcome Back!',
+                    text: 'Login successful. Redirecting...',
+                    icon: 'success',
+                    iconColor: '#319B72',       
+                    confirmButtonColor: '#1A4D3F', 
+                    
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = 'dashboard.html';
+                });
+
+            } else {
+                Swal.fire({
+                    title: 'Access Denied',
+                    text: 'Invalid username or password.',
+                    icon: 'error',
+                    iconColor: '#d33',          
+                    confirmButtonColor: '#1A4D3F', 
+                    confirmButtonText: 'Try Again'
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

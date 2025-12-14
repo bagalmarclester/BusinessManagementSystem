@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients | Tanaman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="dashboard-body">
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo-container">
+                <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
+            </div>
+            <span class="company-name">Tanaman</span>
+        </div>
+<!-- DRE ANG PICTURE UG OTHER USER SETTINGS AND DETAILS -->
+        <div class="nav-profile" id="profile-trigger">
+            <div class="profile-text">
+                <span class="profile-name">Marc Lester</span>
+                <span class="profile-role">Admin</span>
+            </div>
+            <img src="Image/images.jpg" alt="Profile" class="profile-pic">
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+            <div class="dropdown-menu" id="profile-dropdown">
+                <div class="dropdown-header">
+                    <div class="user-name">Marc Lester</div>
+                    <div class="user-email">marclester@gmail.com</div>
+                </div>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
+                <hr class="dropdown-divider">
+                <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                <li><a href="client.html" class="active"><i class="fas fa-user-friends"></i> <span>Clients</span></a></li>
+                <li><a href="project.html"><i class="fas fa-briefcase"></i> <span>Projects</span></a></li>
+                <li><a href="employee.html"><i class="fas fa-user-check"></i> <span>Employees</span></a></li>
+                <li><a href="quote.html"><i class="fas fa-file-invoice"></i> <span>Quotes</span></a></li>
+                <li><a href="invoice.html"><i class="fas fa-file-invoice-dollar"></i> <span>Invoices</span></a></li>
+                <li><a href="inventory.html"><i class="fas fa-box"></i> <span>Inventory</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="index.html" class="sign-out-link"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="page-header">
+                <div>
+                    <h2>Clients</h2>
+                    <p>View and manage clients</p>
+                </div>
+                <button class="btn-primary" id="addClientBtn">
+                    <i class="fas fa-plus"></i> Add Client
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="window.location.href='clientPanel.html'"> <!-- click para ma open ang  Client details -->
+                            <td>John Doe</td>
+                            <td>john.doe@example.com</td>
+                            <td>+63 912 345 6789</td>
+                            <td>Manila, Philippines</td>
+                            <td>
+                                <button class="btn-edit" onclick="event.stopPropagation(); openEditModal(this)">Edit</button>
+                                <button class="btn-delete" onclick="event.stopPropagation(); deleteClient(this)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+
+    <div class="modal-overlay" id="addClientModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Add New Client</h3>
+                <span class="close-modal-btn">&times;</span>
+            </div>
+            <form class="modal-form">
+                <div class="input-group">
+                    <label>Client Name</label>
+                    <input type="text" placeholder="e.g. TechFlow Inc." required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="contact@company.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+63 912 345 6789">
+                </div>
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" placeholder="City, Country">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="submit" class="btn-save">Save Client</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editClientModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Edit Client</h3>
+                <span class="close-modal-btn" onclick="closeEditModal()">&times;</span>
+            </div>
+            <form class="modal-form" onsubmit="saveClientChanges(event)">
+                <div class="input-group">
+                    <label>Client Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="editPhone">
+                </div>
+                <div class="input-group">
+                    <label>Address</label>
+                    <input type="text" id="editAddress">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentRow; 
+        const profileTrigger = document.getElementById('profile-trigger');
+        const dropdownMenu = document.getElementById('profile-dropdown');
+        const dropdownIcon = document.querySelector('.dropdown-icon');
+
+        if(profileTrigger) {
+            profileTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                dropdownIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+
+            window.addEventListener('click', function(e) {
+                if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+        // ADD  Function 
+        const addModal = document.getElementById('addClientModal');
+        const addBtn = document.getElementById('addClientBtn');
+        const closeAddBtn = document.querySelector('.close-modal-btn');
+        const cancelAddBtn = document.querySelector('.btn-cancel');
+
+        if (addBtn) addBtn.addEventListener('click', () => addModal.style.display = 'flex');
+        if (closeAddBtn) closeAddBtn.addEventListener('click', () => addModal.style.display = 'none');
+        if (cancelAddBtn) cancelAddBtn.addEventListener('click', () => addModal.style.display = 'none');
+
+        // EDIT Funnction 
+        const editModal = document.getElementById('editClientModal');
+
+        function openEditModal(button) {
+            currentRow = button.closest('tr');
+            const cells = currentRow.getElementsByTagName('td');
+            document.getElementById('editName').value = cells[0].innerText;
+            document.getElementById('editEmail').value = cells[1].innerText;
+            document.getElementById('editPhone').value = cells[2].innerText;
+            document.getElementById('editAddress').value = cells[3].innerText;
+            editModal.style.display = 'flex';
+        }
+
+        function saveClientChanges(event) {
+            event.preventDefault(); 
+            const cells = currentRow.getElementsByTagName('td');
+            cells[0].innerText = document.getElementById('editName').value;
+            cells[1].innerText = document.getElementById('editEmail').value;
+            cells[2].innerText = document.getElementById('editPhone').value;
+            cells[3].innerText = document.getElementById('editAddress').value;
+
+            // Catch Close & Success Alert
+            closeEditModal();
+            Swal.fire({
+                title: 'Updated!',
+                text: 'Client details saved successfully.',
+                icon: 'success',
+                confirmButtonColor: '#319B72',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        }
+
+        function closeEditModal() {
+            if(editModal) editModal.style.display = 'none';
+        }
+
+        // DELETE Function
+        function deleteClient(button) {
+            const row = button.closest('tr');
+            
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#319B72',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    row.remove();
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Client has been removed.',
+                        icon: 'success',
+                        confirmButtonColor: '#319B72'
+                    });
+                }
+            });
+        }
+
+        // (Closes Modals)
+        window.addEventListener('click', (e) => {
+            if (e.target === addModal) addModal.style.display = 'none';
+            if (e.target === editModal) editModal.style.display = 'none';
+        });
+
+    </script>
+
+</body>
+</html>
