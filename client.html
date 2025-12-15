@@ -11,6 +11,7 @@
 <body class="dashboard-body">
 
     <nav class="navbar">
+        <i class="fas fa-bars" id="menu-toggle" style="font-size: 1.5rem; cursor: pointer; display: none; margin-right: 15px;"></i>
         <div class="nav-brand">
             <div class="logo-container">
                 <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
@@ -32,7 +33,7 @@
                     <div class="user-email">marclester@gmail.com</div>
                 </div>
                 <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="myProfile.html" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
                 <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
                 <hr class="dropdown-divider">
                 <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
@@ -171,7 +172,11 @@
             profileTrigger.addEventListener('click', function(e) {
                 e.stopPropagation();
                 dropdownMenu.classList.toggle('show');
-                dropdownIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
             });
 
             window.addEventListener('click', function(e) {
@@ -181,6 +186,8 @@
                 }
             });
         }
+
+
 
         // ADD  Function 
         const addModal = document.getElementById('addClientModal');
@@ -259,6 +266,23 @@
             if (e.target === addModal) addModal.style.display = 'none';
             if (e.target === editModal) editModal.style.display = 'none';
         });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (menuToggle && sidebar) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            sidebar.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                e.target !== menuToggle) {
+                sidebar.classList.remove('active');
+            }
+        });
+    }
 
     </script>
 

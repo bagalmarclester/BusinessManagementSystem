@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Tanaman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+    <nav class="navbar">
+        <i class="fas fa-bars" id="menu-toggle" style="font-size: 1.5rem; cursor: pointer; display: none; margin-right: 15px;"></i>
+        <div class="nav-brand">
+            <div class="logo-container">
+                <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
+            </div>
+            <span class="company-name">Tanaman</span>
+        </div>
+
+        <div class="nav-profile" id="profile-trigger">
+            <div class="profile-text">
+                <span class="profile-name">Marc Lester</span>
+                <span class="profile-role">Admin</span>
+            </div>
+            <img src="Image/images.jpg" alt="Profile" class="profile-pic">
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+            <div class="dropdown-menu" id="profile-dropdown">
+                <div class="dropdown-header">
+                    <div class="user-name">Marc Lester</div>
+                    <div class="user-email">marclester@gmail.com</div>
+                </div>
+                <hr class="dropdown-divider">
+                <a href="myProfile.html" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
+                <hr class="dropdown-divider">
+                <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                <li><a href="client.html"><i class="fas fa-user-friends"></i> <span>Clients</span></a></li>
+                <li><a href="project.html"><i class="fas fa-briefcase"></i> <span>Projects</span></a></li>
+                <li><a href="employee.html"><i class="fas fa-user-check"></i> <span>Employees</span></a></li>
+                <li><a href="quote.html"><i class="fas fa-file-invoice"></i> <span>Quotes</span></a></li>
+                <li><a href="invoice.html"><i class="fas fa-file-invoice-dollar"></i> <span>Invoices</span></a></li>
+                <li><a href="inventory.html"><i class="fas fa-box"></i> <span>Inventory</span></a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h2>My Profile</h2>
+                    <p>Manage your personal information</p>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-banner"></div>
+
+                <div class="profile-body">
+                    <div class="profile-header-row">
+                        <div class="profile-avatar-wrapper">
+                            <img src="Image/images.jpg" alt="Marc" class="profile-avatar-large">
+                            <div class="camera-btn">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <button class="btn-edit-profile" id="editProfileBtn">Edit Profile</button>
+                    </div>
+
+                    <form class="profile-form-grid" id="profileForm">
+                        
+                        <div class="profile-input-group">
+                            <label>Full Name</label>
+                            <div class="input-with-icon">
+                                <i class="far fa-user"></i>
+                                <input type="text" value="Marc Lester" readonly>
+                            </div>
+                        </div>
+
+                        <div class="profile-input-group">
+                            <label>Email Address</label>
+                            <div class="input-with-icon">
+                                <i class="far fa-envelope"></i>
+                                <input type="email" value="marclester@gmail.com" readonly>
+                            </div>
+                        </div>
+
+                        <div class="profile-input-group">
+                            <label>Phone</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone-alt"></i>
+                                <input type="tel" value="+1 (555) 000-0000" readonly>
+                            </div>
+                        </div>
+
+                        <div class="profile-input-group">
+                            <label>Location</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" value="New York, USA" readonly>
+                            </div>
+                        </div>
+
+                        <div class="profile-input-group full-width">
+                            <label>Bio</label>
+                            <div class="input-with-icon">
+                                <textarea rows="4" readonly>Senior Administrator with 10+ years of experience in business management. Passionate about streamlining operations and improving team efficiency.</textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const profileTrigger = document.getElementById('profile-trigger');
+        const dropdownMenu = document.getElementById('profile-dropdown');
+        const dropdownIcon = document.querySelector('.dropdown-icon');
+
+        if(profileTrigger) {
+            profileTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                dropdownIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+            window.addEventListener('click', function(e) {
+                if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+        const editBtn = document.getElementById('editProfileBtn');
+        const formInputs = document.querySelectorAll('.profile-form-grid input, .profile-form-grid textarea');
+        let isEditing = false; 
+
+        editBtn.addEventListener('click', (e) => {
+            e.preventDefault(); 
+
+            if (!isEditing) {
+                isEditing = true;
+                formInputs.forEach(input => input.removeAttribute('readonly'));
+                editBtn.textContent = "Save Changes";
+                editBtn.classList.add('btn-save-mode');
+                formInputs[0].focus();
+
+            } else {
+                Swal.fire({
+                    title: 'Profile Saved!',
+                    text: 'Your changes have been updated.',
+                    icon: 'success',
+                    confirmButtonColor: '#1A4D3E',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                isEditing = false;
+                formInputs.forEach(input => input.setAttribute('readonly', true));
+                editBtn.textContent = "Edit Profile";
+                editBtn.classList.remove('btn-save-mode');
+            }
+        });
+
+        
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                sidebar.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (sidebar.classList.contains('active') && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== menuToggle) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

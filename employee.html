@@ -9,6 +9,7 @@
 </head>
 <body class="dashboard-body">
     <nav class="navbar">
+        <i class="fas fa-bars" id="menu-toggle" style="font-size: 1.5rem; cursor: pointer; display: none; margin-right: 15px;"></i>
         <div class="nav-brand">
             <div class="logo-container">
                 <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
@@ -29,7 +30,7 @@
                     <div class="user-email">marclester@gmail.com</div>
                 </div>
                 <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="myProfile.html" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
                 <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
                 <hr class="dropdown-divider">
                 <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
@@ -203,6 +204,24 @@
                 modal.style.display = 'none';
             }
      });
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                sidebar.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+
+                if (sidebar.classList.contains('active') && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== menuToggle) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
     </script>
 
 </body>

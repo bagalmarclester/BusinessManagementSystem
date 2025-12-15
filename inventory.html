@@ -9,6 +9,7 @@
 </head>
 <body class="dashboard-body">
     <nav class="navbar">
+        <i class="fas fa-bars" id="menu-toggle" style="font-size: 1.5rem; cursor: pointer; display: none; margin-right: 15px;"></i>
         <div class="nav-brand">
             <div class="logo-container">
                 <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
@@ -30,7 +31,7 @@
                     <div class="user-email">marc.lester@example.com</div> 
                 </div>
                 <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="myProfile.htm" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
                 <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
                 <hr class="dropdown-divider"> 
                 <a href="#" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
@@ -116,9 +117,51 @@
                         </table>
                     </div>
 
-                </main>
-            </div>
+                        </main>
+                    </div>
 
+            <script>
+                const menuToggle = document.getElementById('menu-toggle');
+                const sidebar = document.querySelector('.sidebar');
 
-</body>
-</html>
+                if (menuToggle && sidebar) {
+                    menuToggle.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Stop click from bubbling
+                        sidebar.classList.toggle('active');
+                    });
+
+                    // Close sidebar when clicking on the main content
+                    document.addEventListener('click', (e) => {
+                        // If sidebar is open AND click is NOT on sidebar AND NOT on toggle button
+                        if (sidebar.classList.contains('active') && 
+                            !sidebar.contains(e.target) && 
+                            e.target !== menuToggle) {
+                            sidebar.classList.remove('active');
+                        }
+                    });
+                }
+            </script>
+
+            <script>
+                const profileTrigger = document.getElementById('profile-trigger');
+                const dropdownMenu = document.getElementById('profile-dropdown');
+                const dropdownIcon = document.querySelector('.dropdown-icon');
+
+                if (profileTrigger) {
+                    profileTrigger.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        dropdownMenu.classList.toggle('show');
+                        dropdownIcon.style.transform = dropdownMenu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    });
+
+                    window.addEventListener('click', function(e) {
+                        if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                            dropdownMenu.classList.remove('show');
+                            dropdownIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                }
+            </script>
+
+        </body>
+        </html>
