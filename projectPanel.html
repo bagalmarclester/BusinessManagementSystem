@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Tanaman</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+</head>
+<body class = dashboard-body>
+
+    <nav class="navbar">
+        <i class="fas fa-bars" id="menu-toggle" style="font-size: 1.5rem; cursor: pointer; display: none; margin-right: 15px;"></i>
+        <div class="nav-brand">
+            <div class="logo-container">
+                <img src="Image/TanamanLogo.png" alt="Logo" class="nav-logo">
+            </div>
+            <span class="company-name">Tanaman</span>
+        </div>
+
+        <div class="nav-profile" id="profile-trigger">
+            <div class="profile-text">
+                <span class="profile-name">Marc Lester</span>
+                <span class="profile-role">Admin</span>
+            </div>
+            <img src="Image/images.jpg" alt="Profile" class="profile-pic">
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+
+            <div class="dropdown-menu" id="profile-dropdown">
+                <div class="dropdown-header">
+                    <div class="user-name">Marc Lester</div>
+                    <div class="user-email">marclester@gmail.com</div>
+                </div>
+                <hr class="dropdown-divider">
+                <a href="myProfile.html" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
+                <hr class="dropdown-divider">
+                <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
+                <li><a href="client.html"><i class="fas fa-user-friends"></i> <span>Clients</span></a></li>
+                <li><a href="project.html" class="active"><i class="fas fa-briefcase"></i> <span>Projects</span></a></li>
+                <li><a href="employee.html"><i class="fas fa-user-check"></i> <span>Employees</span></a></li>
+                <li><a href="quote.html"><i class="fas fa-file-invoice"></i> <span>Quotes</span></a></li>
+                <li><a href="invoice.html"><i class="fas fa-file-invoice-dollar"></i> <span>Invoices</span></a></li>
+                <li><a href="inventory.html"><i class="fas fa-box"></i> <span>Inventory</span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="index.html" class="sign-out-link"><i class="fas fa-sign-out-alt"></i> <span>Sign Out</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <a href="project.html" style="text-decoration:none; color: #64748b; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; margin-bottom: 10px;">
+                        <i class="fas fa-arrow-left"></i> Back to Clients
+                    </a>
+                    <div class="project-title-section">
+                        <div class="project-title-left">
+                            <h2 id="displayName">Garden Design</h2>
+                            <p class="project-client">BET Solutions</p>
+                        </div>
+                        <div class="project-title-right">
+                            <span class="status-badge-project active">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="project-detail-container">
+                <aside class="project-detail-left">
+                    <div class="info-card project-info">
+                        <div class="card-title">
+                            <i class="fas fa-info-circle"></i>
+                            <h3>PROJECT INFO</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-section">
+                                <label>DESCRIPTION</label>
+                                <p>This is the description area</p>
+                            </div>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>BUDGET</label>
+                                    <p id="projectBudget">₱1000</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>End Date</label>
+                                    <p id="projectEndDate">05/05/2025</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <label>Created</label>
+                                <p id="projectCreated">01/05/2025</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card client-contact">
+                        <div class="card-title">
+                            <h3>Client Contact</h3>
+                        </div>
+                        <div class="card-content">
+                            <p class="client-name" id="clientName">BET Solutions</p>
+                            <p class="client-email" id="clientEmail">bet@mail.com</p>
+                            <p class="client-phone" id="clientPhone">9950024655</p>
+                        </div>
+                    </div>
+                </aside>
+                <section class="project-detail-right">
+                    <div class="progression-gallery">
+                        <div class="gallery-header">
+                            <div class="gallery-title">
+                                <i class="fas fa-images"></i>
+                                <span>Progression Gallery</span>
+                            </div>
+                            <button class="btn-upload-photo">
+                                <i class="fas fa-upload"></i> Upload Photo
+                            </button>
+                        </div>
+                        <div class="gallery-content">
+                            <div class="gallery-placeholder">
+                                <i class="fas fa-image"></i>
+                                <p>No progression photos uploaded yet</p>
+                                <small>Upload images to track project status</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const profileTrigger = document.getElementById('profile-trigger');
+        const dropdownMenu = document.getElementById('profile-dropdown');
+        const dropdownIcon = document.querySelector('.dropdown-icon');
+
+        if(profileTrigger) {
+            profileTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            window.addEventListener('click', function(e) {
+                if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                sidebar.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (sidebar.classList.contains('active') && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== menuToggle) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>

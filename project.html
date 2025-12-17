@@ -79,7 +79,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        </tbody>
+                        <tr onclick="window.location.href='projectPanel.html'">
+                            <td>Website Redesign</td>
+                            <td>John Doe</td>
+                            <td><span class="status-badge in-progress">In Progress</span></td>
+                            <td>2024-07-15</td>
+                            <td>$5000</td>
+                            <td>
+                                <button type="button" class="btn-action edit-btn" onclick="openEditModal(this)"><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn-action delete-btn" onclick="deleteProject(this)"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </main>
@@ -91,83 +102,227 @@
                 <h3>Add New Project</h3>
                 <span class="close-modal-btn" id="closeProjectModal">&times;</span>
             </div>
-            <form class="modal-form">
+            <form class="modal-form" onsubmit="saveNewProject(event)">
                 <div class="input-group">
                     <label>Project Name</label>
-                    <input type="text" placeholder="e.g. Website Redesign" required>
+                    <input type="text" id="addName" placeholder="e.g. Website Redesign" required>
                 </div>
                 <div class="input-group">
                     <label>Client</label>
-                    <input type="text" placeholder="e.g. John Doe" required>
+                    <select id="addClient" required>
+                        <option value="">-- Select a Client --</option>
+                        <option value="John Doe">John Doe</option>
+                        <option value="Jane Smith">Jane Smith</option>
+                        <option value="Acme Corp">Acme Corp</option>
+                        <option value="Tech Solutions">Tech Solutions</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label>Deadline</label>
-                    <input type="date" required>
+                    <input type="date" id="addDeadline" required>
                 </div>
                 <div class="input-group">
                     <label>Budget ($)</label>
-                    <input type="number" placeholder="e.g. 5000" required>
+                    <input type="number" id="addBudget" placeholder="e.g. 5000" required>
+                </div>
+                <div class="input-group">
+                    <label>Status</label>
+                    <select id="addStatus" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Pending">Pending</option>
+                    </select>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-cancel">Cancel</button>
+                    <button type="button"    class="btn-cancel" onclick="closeAddModal()">Cancel</button>
                     <button type="submit" class="btn-save">Save Project</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
+ <div class="modal-overlay" id="editProjectModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Edit Project</h3>
+                <span class="close-modal-btn" onclick="closeEditModal()">&times;</span>
+            </div>
+            <form class="modal-form" onsubmit="saveProjectChanges(event)">
+                <div class="input-group">
+                    <label>Project Name</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="input-group">
+                    <label>Client</label>
+                    <select id="editClient" required>
+                        <option value="">-- Select a Client --</option>
+                        <option value="John Doe">John Doe</option>
+                        <option value="Jane Smith">Jane Smith</option>
+                        <option value="Acme Corp">Acme Corp</option>
+                        <option value="Tech Solutions">Tech Solutions</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Deadline</label>
+                    <input type="date" id="editDeadline">
+                </div>
+                <div class="input-group">
+                    <label>Budget ($)</label>
+                    <input type="number" id="editBudget">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-        // Profile Dropdown
+    <script>
+        let currentRow; 
         const profileTrigger = document.getElementById('profile-trigger');
         const dropdownMenu = document.getElementById('profile-dropdown');
         const dropdownIcon = document.querySelector('.dropdown-icon');
 
-        profileTrigger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-            if (dropdownMenu.classList.contains('show')) {
-                dropdownIcon.style.transform = 'rotate(180deg)';
-            } else {
-                dropdownIcon.style.transform = 'rotate(0deg)';
-            }
-        });
+        if(profileTrigger) {
+            profileTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
 
-        window.addEventListener('click', function(e) {
-            if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
-                dropdownMenu.classList.remove('show');
-                dropdownIcon.style.transform = 'rotate(0deg)';
-            }
-        });
+            window.addEventListener('click', function(e) {
+                if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
+
+
 
         // Add Project Modal
-        const modal = document.getElementById('addProjectModal');
-        const openBtn = document.getElementById('addProjectBtn');
-        const closeBtn = document.querySelector('.close-modal-btn');
-        const cancelBtn = document.querySelector('.btn-cancel');
+        const addModal = document.getElementById('addProjectModal');
+        const addBtn = document.getElementById('addProjectBtn');
+        const closeAddBtn = document.querySelector('.close-modal-btn');
+        const cancelAddBtn = document.querySelector('.btn-cancel');
 
-        if(openBtn) {
-            openBtn.addEventListener('click', () => {
-                modal.style.display = 'flex';
+        if (addBtn) addBtn.addEventListener('click', () => addModal.style.display = 'flex');
+        if (closeAddBtn) closeAddBtn.addEventListener('click', () => addModal.style.display = 'none');
+        if (cancelAddBtn) cancelAddBtn.addEventListener('click', () => addModal.style.display = 'none');
+
+        // EDIT Function 
+        const editModal = document.getElementById('editProjectModal');
+
+        function openEditModal(button) {
+            currentRow = button.closest('tr');
+            const cells = currentRow.getElementsByTagName('td');
+            document.getElementById('editName').value = cells[0].innerText;
+            document.getElementById('editClient').value = cells[1].innerText;
+            document.getElementById('editDeadline').value = cells[3].innerText;
+            document.getElementById('editBudget').value = cells[4].innerText.replace('$', '');
+            editModal.style.display = 'flex';
+        }
+
+        function saveProjectChanges(event) {
+            event.preventDefault(); 
+            const cells = currentRow.getElementsByTagName('td');
+            cells[0].innerText = document.getElementById('editName').value;
+            cells[1].innerText = document.getElementById('editClient').value;
+            cells[3].innerText = document.getElementById('editDeadline').value;
+            cells[4].innerText = '$' + document.getElementById('editBudget').value;
+
+            // Catch Close & Success Alert
+            closeEditModal();
+            Swal.fire({
+                title: 'Updated!',
+                text: 'Project details saved successfully.',
+                icon: 'success',
+                confirmButtonColor: '#319B72',
+                timer: 1500,
+                showConfirmButton: false
             });
         }
 
-        if(closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
+        function closeEditModal() {
+            if(editModal) editModal.style.display = 'none';
+        }
+
+        function closeAddModal() {
+            addModal.style.display = 'none';
+        }
+
+        function saveNewProject(event) {
+            event.preventDefault();
+            const table = document.querySelector('.data-table tbody');
+            const newRow = table.insertRow();
+            
+            const name = document.getElementById('addName').value;
+            const client = document.getElementById('addClient').value;
+            const deadline = document.getElementById('addDeadline').value;
+            const budget = document.getElementById('addBudget').value;
+            const status = document.getElementById('addStatus').value;
+            
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${client}</td>
+                <td><span class="status-badge in-progress">${status}</span></td>
+                <td>${deadline}</td>
+                <td>$${budget}</td>
+                <td>
+                    <button type="button" class="btn-action edit-btn" onclick="openEditModal(this)"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn-action delete-btn" onclick="deleteProject(this)"><i class="fas fa-trash"></i></button>
+                </td>
+            `;
+            
+            closeAddModal();
+            document.querySelector('.modal-form').reset();
+            
+            Swal.fire({
+                title: 'Success!',
+                text: 'Project added successfully.',
+                icon: 'success',
+                confirmButtonColor: '#319B72',
+                timer: 1500,
+                showConfirmButton: false
             });
         }
 
-        if(cancelBtn) {
-            cancelBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
+        // DELETE Function
+        function deleteProject(button) {
+            const row = button.closest('tr');
+            
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#319B72',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    row.remove();
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Project has been removed.',
+                        icon: 'success',
+                        confirmButtonColor: '#319B72'
+                    });
+                }
             });
         }
 
+        // (Closes Modals)
         window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
+            if (e.target === addModal) addModal.style.display = 'none';
+            if (e.target === editModal) editModal.style.display = 'none';
         });
 
         const menuToggle = document.getElementById('menu-toggle');
@@ -178,9 +333,7 @@
                 e.stopPropagation(); 
                 sidebar.classList.toggle('active');
             });
-
             document.addEventListener('click', (e) => {
-
                 if (sidebar.classList.contains('active') && 
                     !sidebar.contains(e.target) && 
                     e.target !== menuToggle) {
@@ -188,6 +341,7 @@
                 }
             });
         }
+
     </script>
 
 </body>
