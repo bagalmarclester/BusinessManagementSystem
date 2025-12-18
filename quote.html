@@ -78,7 +78,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        </tbody>
+                        <tr>
+                            <td>BET Solutions</td>
+                            <td>₱ 15,000.00</td>
+                            <td>2024-06-15</td>
+                            <td><span class="status-badge quote-pending">Pending</span></td>
+                            <td>
+                                <button class="btn-action"><i class="fas fa-eye"></i></button>
+                                <button class="btn-action"><i class="fas fa-edit"></i></button>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </main>
@@ -198,13 +207,11 @@
 
         if (menuToggle && sidebar) {
             menuToggle.addEventListener('click', (e) => {
-                e.stopPropagation(); // Stop click from bubbling
+                e.stopPropagation(); 
                 sidebar.classList.toggle('active');
             });
 
-            // Close sidebar when clicking on the main content
             document.addEventListener('click', (e) => {
-                // If sidebar is open AND click is NOT on sidebar AND NOT on toggle button
                 if (sidebar.classList.contains('active') && 
                     !sidebar.contains(e.target) && 
                     e.target !== menuToggle) {
