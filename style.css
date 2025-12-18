@@ -14,8 +14,7 @@ body {
     align-items: center;
 }
 
-/* UNIVERSAL BODY LAYOUT (bahalag balik.x label)*/
-
+/* UNIVERSAL BODY LAYOUT */
 .dashboard-body {
     display: block; 
     padding-top: 50px;
@@ -35,7 +34,7 @@ body {
 }
 
 .card-header {
-    background-color: #1A4D3F; 
+    background-color: #1A4D3E;
     padding: 2rem;
     text-align: center;
 }
@@ -71,7 +70,7 @@ body {
     color: #64748b;
 }
 .input-group input:focus {
-    border-color: #1A4D3F;
+    border-color: #1A4D3E; 
     outline: none;
 }
 
@@ -120,7 +119,7 @@ body {
 .card-footer a:hover { text-decoration: underline; }
 
 
-/* NAVBAR STYLES*/
+/* NAVBAR STYLES */
 .navbar {
     width: 100%;
     height: 50px;
@@ -169,7 +168,6 @@ body {
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     padding: 10px 0;
-    z-index: 2000;
 }
 .dropdown-menu.show {
     display: block !important; 
@@ -188,11 +186,12 @@ body {
 }
 .dropdown-item:hover { background-color: #f6f9fc; color: #1A4D3E; }
 .dropdown-item i { width: 25px; margin-right: 10px; }
-.logout-item { color: #e74c3c !important; }
-.logout-item:hover { background-color: #fff5f5; color: #c0392b !important; }
+
+.logout-item { color: #ef4444 !important; }
+.logout-item:hover { background-color: #fef2f2; color: #dc2626 !important; }
 
 
-/* DASHBOARD LAYOUT (same dre balik.x rani - basi ma improve pa ni) */
+/* DASHBOARD LAYOUT */
 .dashboard-container {
     display: flex;
     height: calc(100vh - 50px); 
@@ -322,7 +321,7 @@ body {
 .icon-bg-purple { background-color: #f3e8ff; color: #9333ea; }
 .icon-bg-orange { background-color: #ffedd5; color: #ea580c; }
 .icon-bg-teal   { background-color: #ccfbf1; color: #0d9488; }
-.icon-bg-red    { background-color: #fee2e2; color: #dc2626; }
+.icon-bg-red    { background-color: #fee2e2; color: #ef4444; }
 
 /* Quick Actions */
 .section-title { color: #334155; font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; }
@@ -350,7 +349,7 @@ body {
 .action-card:hover .action-title { color: #319B72; }
 
 
-/* TABLE STYLES*/
+/* TABLE STYLES */
 .btn-primary {
     background-color: #319B72; color: white; border: none;
     padding: 10px 20px; border-radius: 6px; cursor: pointer;
@@ -393,10 +392,8 @@ body {
 
 .status-badge.inactive { 
     font-weight: 700;
-    color: slategray;
-    font-size: 0.85rem;
     color: #64748b;
-
+    font-size: 0.85rem;
 }
 
 .status-badge.done { 
@@ -407,20 +404,19 @@ body {
 
 .action-btn { background: none; border: none; cursor: pointer; padding: 5px; color: #94a3b8; transition: color 0.2s; }
 .action-btn:hover { color: #1A4D3E; }
-.action-btn.delete:hover { color: #ef4444; }
+
+.action-btn.delete:hover { color: #ef4444; } 
 
 .data-table tr:hover { 
     background-color: #f9fafb; 
     cursor: pointer;
 }
 
-
 .data-table tbody tr:hover{
     background-color: #e2e8f0;
-
 }
 
-/* POPUP STYLES (Fixed)*/
+/* POPUP STYLES */
 .modal-overlay {
     display: none; 
     position: fixed;
@@ -447,7 +443,7 @@ body {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px;
 }
-.modal-header h3 { color: #1A4D3E; font-size: 1.2rem; }
+.modal-header h3 { color: #1A4D3E; font-size: 1.2rem; } 
 .close-modal-btn { font-size: 1.5rem; color: #64748b; cursor: pointer; }
 .close-modal-btn:hover { color: #ef4444; }
 
@@ -473,7 +469,7 @@ body {
 }
 
 
-/*Other Layout in Quotes*/
+/* Quote Layout */
 
 .line-items-header {
     display: flex;
@@ -515,7 +511,7 @@ body {
 }
 
 .btn-remove {
-    color: #ff6b6b; 
+    color: #ef4444; 
     background: transparent;
     border: none;
     font-size: 1.2rem;
@@ -553,7 +549,7 @@ body {
     font-size: 1rem;
 }
 
-/*MyProfile Layout*/
+/* MyProfile Layout */
 
 .profile-card {
     background: white;
@@ -564,7 +560,7 @@ body {
 }
 
 .profile-banner {
-    background-color: #1A4D3E; 
+    background-color: #1A4D3E;
     height: 120px;
     width: 100%;
 }
@@ -632,7 +628,7 @@ body {
     box-shadow: 0 0 0 3px rgba(26, 77, 62, 0.1);
 }
 
-/* RESPONSIVE to (Mobile/Tablet) */
+/* RESPONSIVE */
 
 @media (max-width: 768px) {
     
@@ -797,7 +793,7 @@ select:focus {
 .card-title h3 {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1A4D3F;
+    color: #1A4D3E; 
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -851,7 +847,7 @@ select:focus {
 
 .client-name {
     font-weight: 600;
-    color: #1A4D3F;
+    color: #1A4D3E; 
     margin-bottom: 0.5rem;
 }
 
@@ -890,7 +886,7 @@ select:focus {
     gap: 0.5rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1A4D3F;
+    color: #1A4D3E; 
 }
 
 .gallery-title i {
@@ -1059,7 +1055,7 @@ select:focus {
     color: #065f46;
 }
 .btn-archive {
-    background-color: #ef4444;
+    background-color: #ef4444; 
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -1073,7 +1069,7 @@ select:focus {
     transition: background-color 0.3s;
 }
 .btn-archive:hover {
-    background-color: #b91c1c;
+    background-color: #dc2626; 
 }
 
 /* RESPONSIVE - Project Detail Panel */
@@ -1140,13 +1136,11 @@ select:focus {
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
 }
 
-/* STOCK OUT*/
-
+/* STOCK OUT */
 .stock-header.header-red {
     background-color: #fef2f2; 
     border-bottom: 1px solid #fee2e2;
 }
-
 
 .header-icon-box.bg-red-soft {
     background-color: #fee2e2;
@@ -1154,13 +1148,13 @@ select:focus {
 }
 
 .btn-save.btn-red {
-    background-color: #ef4444;
+    background-color: #ef4444; 
 }
 .btn-save.btn-red:hover {
-    background-color: #dc2626;
+    background-color: #dc2626; 
 }
 
 .dark-input.input-red-focus:focus {
-    border-color: #ef4444 !important;
+    border-color: #ef4444 !important; 
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
