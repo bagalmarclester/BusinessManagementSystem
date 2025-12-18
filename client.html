@@ -18,7 +18,7 @@
             </div>
             <span class="company-name">Tanaman</span>
         </div>
-<!-- DRE ANG PICTURE UG OTHER USER SETTINGS AND DETAILS -->
+
         <div class="nav-profile" id="profile-trigger">
             <div class="profile-text">
                 <span class="profile-name">Marc Lester</span>
@@ -65,13 +65,20 @@
                     <h2>Clients</h2>
                     <p>View and manage clients</p>
                 </div>
-                <button class="btn-primary" id="addClientBtn">
-                    <i class="fas fa-plus"></i> Add Client
-                </button>
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="position: relative;">
+                        <input type="text" id="searchInput" placeholder="Search clients..." style="padding: 10px 10px 10px 35px; border: 1px solid #ddd; border-radius: 6px; outline: none; width: 250px;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                    </div>
+                    <button class="btn-primary" id="addClientBtn">
+                        <i class="fas fa-plus"></i> Add Client
+                    </button>
+                </div>
             </div>
 
             <div class="table-container">
-                <table class="data-table">
+                <table class="data-table" id="clientTable">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -82,14 +89,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr onclick="window.location.href='clientPanel.html'"> <!-- click para ma open ang  Client details -->
+                        <tr onclick="window.location.href='clientPanel.html'">
                             <td>John Doe</td>
                             <td>john.doe@example.com</td>
                             <td>+63 912 345 6789</td>
                             <td>Manila, Philippines</td>
                             <td>
-                                <button class="btn-edit" onclick="event.stopPropagation(); openEditModal(this)">Edit</button>
-                                <button class="btn-delete" onclick="event.stopPropagation(); deleteClient(this)">Delete</button>
+                                <button class="btn-edit" style="border:none; background:none; color:#64748b; cursor:pointer;" onclick="event.stopPropagation(); openEditModal(this)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-delete" style="border:none; background:none; color:#ef4444; cursor:pointer;" onclick="event.stopPropagation(); deleteClient(this)"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -163,6 +170,23 @@
     </div>
 
     <script>
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById('clientTable');
+        
+        searchInput.addEventListener('keyup', function() {
+            const filter = searchInput.value.toLowerCase();
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                let textContent = rows[i].innerText.toLowerCase();
+                if (textContent.includes(filter)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+        });
+
         let currentRow; 
         const profileTrigger = document.getElementById('profile-trigger');
         const dropdownMenu = document.getElementById('profile-dropdown');
@@ -187,9 +211,6 @@
             });
         }
 
-
-
-        // ADD  Function 
         const addModal = document.getElementById('addClientModal');
         const addBtn = document.getElementById('addClientBtn');
         const closeAddBtn = document.querySelector('.close-modal-btn');
@@ -199,7 +220,6 @@
         if (closeAddBtn) closeAddBtn.addEventListener('click', () => addModal.style.display = 'none');
         if (cancelAddBtn) cancelAddBtn.addEventListener('click', () => addModal.style.display = 'none');
 
-        // EDIT Funnction 
         const editModal = document.getElementById('editClientModal');
 
         function openEditModal(button) {
@@ -220,7 +240,6 @@
             cells[2].innerText = document.getElementById('editPhone').value;
             cells[3].innerText = document.getElementById('editAddress').value;
 
-            // Catch Close & Success Alert
             closeEditModal();
             Swal.fire({
                 title: 'Updated!',
@@ -236,7 +255,6 @@
             if(editModal) editModal.style.display = 'none';
         }
 
-        // DELETE Function
         function deleteClient(button) {
             const row = button.closest('tr');
             
@@ -261,29 +279,27 @@
             });
         }
 
-        // (Closes Modals)
         window.addEventListener('click', (e) => {
             if (e.target === addModal) addModal.style.display = 'none';
             if (e.target === editModal) editModal.style.display = 'none';
         });
 
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
 
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            sidebar.classList.toggle('active');
-        });
-        document.addEventListener('click', (e) => {
-            if (sidebar.classList.contains('active') && 
-                !sidebar.contains(e.target) && 
-                e.target !== menuToggle) {
-                sidebar.classList.remove('active');
-            }
-        });
-    }
-
+        if (menuToggle && sidebar) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                sidebar.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (sidebar.classList.contains('active') && 
+                    !sidebar.contains(e.target) && 
+                    e.target !== menuToggle) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
     </script>
 
 </body>

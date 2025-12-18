@@ -31,7 +31,7 @@
                     <div class="user-email">marclester@gmail.com</div>
                 </div>
                 <hr class="dropdown-divider">
-                <a href="myProfile.html" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="myProfile.htm" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
                 <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
                 <hr class="dropdown-divider">
                 <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
@@ -61,9 +61,16 @@
                     <h2>Quotes</h2>
                     <p>View and manage quotes</p>
                 </div>
-                <button class="btn-primary" id="addQuoteBtn">
-                    <i class="fas fa-plus"></i> Create Quote
-                </button>
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="position: relative;">
+                        <input type="text" id="searchInput" placeholder="Search quotes..." style="padding: 10px 10px 10px 35px; border: 1px solid #ddd; border-radius: 6px; outline: none; width: 250px;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                    </div>
+                    <button class="btn-primary" id="addQuoteBtn">
+                        <i class="fas fa-plus"></i> Create Quote
+                    </button>
+                </div>
             </div>
 
             <div class="table-container">
@@ -135,6 +142,24 @@
     </div>
 
 <script>
+        const searchInput = document.getElementById('searchInput');
+        const table = document.querySelector('.data-table');
+        
+        if(searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                const rows = table.getElementsByTagName('tr');
+
+                for (let i = 1; i < rows.length; i++) {
+                    let textContent = rows[i].innerText.toLowerCase();
+                    if (textContent.includes(filter)) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            });
+        }
 
         const profileTrigger = document.getElementById('profile-trigger');
         const dropdownMenu = document.getElementById('profile-dropdown');

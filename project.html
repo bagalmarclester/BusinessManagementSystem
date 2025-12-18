@@ -6,6 +6,7 @@
     <title>Projects | Tanaman</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="dashboard-body">
     <nav class="navbar">
@@ -31,7 +32,7 @@
                     <div class="user-email">marclester@gmail.com</div>
                 </div>
                 <hr class="dropdown-divider">
-                <a href="myProfile.htm" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
+                <a href="myProfile.html" class="dropdown-item"><i class="far fa-user"></i><span>My Profile</span></a>
                 <a href="#" class="dropdown-item"><i class="fas fa-cog"></i><span>Account Setting</span></a>
                 <hr class="dropdown-divider">
                 <a href="index.html" class="dropdown-item logout-item"><i class="fas fa-sign-out-alt"></i><span>Sign Out</span></a>
@@ -61,9 +62,16 @@
                     <h2>Projects</h2>
                     <p>Manage all projects and their details</p>
                 </div>
-                <button class="btn-primary" id="addProjectBtn">
-                    <i class="fas fa-plus"></i> Add Project
-                </button>
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="position: relative;">
+                        <input type="text" id="searchInput" placeholder="Search projects..." style="padding: 10px 10px 10px 35px; border: 1px solid #ddd; border-radius: 6px; outline: none; width: 250px;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                    </div>
+                    <button class="btn-primary" id="addProjectBtn">
+                        <i class="fas fa-plus"></i> Add Project
+                    </button>
+                </div>
             </div>
 
             <div class="table-container">
@@ -84,7 +92,7 @@
                             <td>John Doe</td>
                             <td><span class="status-badge in-progress">In Progress</span></td>
                             <td>2024-07-15</td>
-                            <td>$5000</td>
+                            <td>₱5000</td>
                             <td>
                                 <button type="button" class="btn-action edit-btn" onclick="openEditModal(this)"><i class="fas fa-edit"></i></button>
                                 <button type="button" class="btn-action delete-btn" onclick="deleteProject(this)"><i class="fas fa-trash"></i></button>
@@ -122,7 +130,7 @@
                     <input type="date" id="addDeadline" required>
                 </div>
                 <div class="input-group">
-                    <label>Budget ($)</label>
+                    <label>Budget (₱)</label>
                     <input type="number" id="addBudget" placeholder="e.g. 5000" required>
                 </div>
                 <div class="input-group">
@@ -169,7 +177,7 @@
                     <input type="date" id="editDeadline">
                 </div>
                 <div class="input-group">
-                    <label>Budget ($)</label>
+                    <label>Budget (₱)</label>
                     <input type="number" id="editBudget">
                 </div>
                 <div class="modal-actions">
@@ -181,6 +189,27 @@
     </div>
 
     <script>
+
+        const searchInput = document.getElementById('searchInput');
+        const table = document.querySelector('.data-table');
+        
+        if(searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                const rows = table.getElementsByTagName('tr');
+
+
+                for (let i = 1; i < rows.length; i++) {
+                    let textContent = rows[i].innerText.toLowerCase();
+                    if (textContent.includes(filter)) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            });
+        }
+
         let currentRow; 
         const profileTrigger = document.getElementById('profile-trigger');
         const dropdownMenu = document.getElementById('profile-dropdown');
@@ -205,8 +234,6 @@
             });
         }
 
-
-
         // Add Project Modal
         const addModal = document.getElementById('addProjectModal');
         const addBtn = document.getElementById('addProjectBtn');
@@ -226,7 +253,7 @@
             document.getElementById('editName').value = cells[0].innerText;
             document.getElementById('editClient').value = cells[1].innerText;
             document.getElementById('editDeadline').value = cells[3].innerText;
-            document.getElementById('editBudget').value = cells[4].innerText.replace('$', '');
+            document.getElementById('editBudget').value = cells[4].innerText.replace('₱', '');
             editModal.style.display = 'flex';
         }
 
@@ -236,7 +263,7 @@
             cells[0].innerText = document.getElementById('editName').value;
             cells[1].innerText = document.getElementById('editClient').value;
             cells[3].innerText = document.getElementById('editDeadline').value;
-            cells[4].innerText = '$' + document.getElementById('editBudget').value;
+            cells[4].innerText = '₱' + document.getElementById('editBudget').value;
 
             // Catch Close & Success Alert
             closeEditModal();
@@ -270,11 +297,11 @@
             const status = document.getElementById('addStatus').value;
             
             newRow.innerHTML = `
-                <td>${name}</td>
-                <td>${client}</td>
-                <td><span class="status-badge in-progress">${status}</span></td>
-                <td>${deadline}</td>
-                <td>$${budget}</td>
+                <td>₱{name}</td>
+                <td>₱{client}</td>
+                <td><span class="status-badge in-progress">₱{status}</span></td>
+                <td>₱{deadline}</td>
+                <td>₱₱{budget}</td>
                 <td>
                     <button type="button" class="btn-action edit-btn" onclick="openEditModal(this)"><i class="fas fa-edit"></i></button>
                     <button type="button" class="btn-action delete-btn" onclick="deleteProject(this)"><i class="fas fa-trash"></i></button>
@@ -319,7 +346,6 @@
             });
         }
 
-        // (Closes Modals)
         window.addEventListener('click', (e) => {
             if (e.target === addModal) addModal.style.display = 'none';
             if (e.target === editModal) editModal.style.display = 'none';

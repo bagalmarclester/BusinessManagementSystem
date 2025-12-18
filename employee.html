@@ -91,9 +91,16 @@
                     <h2>Employees</h2>
                     <p>Manage team members and roles</p>
                 </div>
-                <button class="btn-primary" id="addEmployeeBtn">
-                    <i class="fas fa-plus"></i> Add Employee
-                </button>
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="position: relative;">
+                        <input type="text" id="searchInput" placeholder="Search employees..." style="padding: 10px 10px 10px 35px; border: 1px solid #ddd; border-radius: 6px; outline: none; width: 250px;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                    </div>
+                    <button class="btn-primary" id="addEmployeeBtn">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </button>
+                </div>
             </div>
             
             <div class="table-container">
@@ -162,56 +169,76 @@
     </div>
 
     <script>
+        const searchInput = document.getElementById('searchInput');
+        const table = document.querySelector('.data-table');
+        
+        if(searchInput) {
+            searchInput.addEventListener('keyup', function() {
+                const filter = searchInput.value.toLowerCase();
+                const rows = table.getElementsByTagName('tr');
+
+                for (let i = 1; i < rows.length; i++) {
+                    let textContent = rows[i].innerText.toLowerCase();
+                    if (textContent.includes(filter)) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            });
+        }
+
         const profileTrigger = document.getElementById('profile-trigger');
         const dropdownMenu = document.getElementById('profile-dropdown');
         const dropdownIcon = document.querySelector('.dropdown-icon');
 
-
         //Profile dropdown
-        profileTrigger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('show');
-            if (dropdownMenu.classList.contains('show')) {
-                dropdownIcon.style.transform = 'rotate(180deg)';
-            } else {
-                dropdownIcon.style.transform = 'rotate(0deg)';
-            }
-        });
-        window.addEventListener('click', function(e) {
-            if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
-                dropdownMenu.classList.remove('show');
-                dropdownIcon.style.transform = 'rotate(0deg)';
-            }
-        });
+        if (profileTrigger) {
+            profileTrigger.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+                if (dropdownMenu.classList.contains('show')) {
+                    dropdownIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+            window.addEventListener('click', function(e) {
+                if (!dropdownMenu.contains(e.target) && !profileTrigger.contains(e.target)) {
+                    dropdownMenu.classList.remove('show');
+                    dropdownIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
 
-
-        // Add employee modal
         const modal = document.getElementById('addEmployeeModal');
         const openBtn = document.getElementById('addEmployeeBtn');
         const closeBtn = document.querySelector('.close-modal-btn');
         const cancelBtn = document.querySelector('.btn-cancel');
 
-
+        if (openBtn) {
             openBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
-        });
+                modal.style.display = 'flex';
+            });
+        }
 
-
+        if (closeBtn) {
             closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
+                modal.style.display = 'none';
+            });
+        }
 
-   
+        if (cancelBtn) {
             cancelBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
+                modal.style.display = 'none';
+            });
+        }
 
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
             }
-     });
+        });
 
         const menuToggle = document.getElementById('menu-toggle');
         const sidebar = document.querySelector('.sidebar');
